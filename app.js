@@ -3,6 +3,7 @@ import { addJobToNotion, updatePageWithQrCode } from "./server/notion.js";
 import multer from "multer";
 import fs from "fs";
 import xml2js from "xml2js";
+import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -48,10 +49,24 @@ app.post("/create-job", upload.none(), async (req, res) => {
   }
 });
 
+import axios from "axios";
+
+// ...
+
 app.post("/generate-label", async (req, res) => {
   const { jobId, qrCodeUrl } = req.body;
 
   try {
+    // Fetch the QR code image as an ArrayBuffer
+    const response = await axios.get(qrCodeUrl, {
+      responseType: "arraybuffer",
+    });
+
+    // Convert the QR code image to a Base64 string
+    const base64QrCode = Buffer.from(response.data, "binary").toString(
+      "base64"
+    );
+
     const labelTemplatePath =
       "C:/Users/savvy/Projects/ziaMaterials/uploads/dymo-test-file-3.dymo";
     const newLabelFilePath = `C:/Users/savvy/Projects/ziaMaterials/uploads/${req.body.Customer}.dymo`;
@@ -71,7 +86,7 @@ app.post("/generate-label", async (req, res) => {
 
       function findQRCodeObject(obj) {
         if (obj.QRCodeObject) {
-          return obj.QRCodeObject[0];
+          return obj;
         }
 
         for (const key in obj) {
@@ -86,10 +101,9 @@ app.post("/generate-label", async (req, res) => {
         return null;
       }
 
-      // Update the QR code URL in the parsed XML
+      // Update the QR code Base64 image in the parsed XML
       const qrCodeObject = findQRCodeObject(parsedXml);
-
-      qrCodeObject.Text = [qrCodeUrl];
+      qrCodeObject.ImageDataHolder[0].Base64Image[0] = base64QrCode;
 
       // Build the updated XML content
       const updatedXml = builder.buildObject(parsedXml);

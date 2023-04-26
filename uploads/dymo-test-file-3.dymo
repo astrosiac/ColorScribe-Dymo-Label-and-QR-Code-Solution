@@ -362,8 +362,8 @@
             </Size>
           </ObjectLayout>
         </TextObject>
-        <BarcodeObject>
-          <Name>IBarcodeObject0</Name>
+        <QRCodeObject>
+          <Name>IQRCodeObject0</Name>
           <Brushes>
             <BackgroundBrush>
               <SolidColorBrush>
@@ -395,37 +395,95 @@
           </Margin>
           <BarcodeFormat>QRCode</BarcodeFormat>
           <Data>
-            <MultiDataString>
-              <DataString></DataString>
-            </MultiDataString>
+            <DataString>URL:</DataString>
           </Data>
           <HorizontalAlignment>Center</HorizontalAlignment>
           <VerticalAlignment>Middle</VerticalAlignment>
-          <Size>SmallMedium</Size>
-          <TextPosition>Bottom</TextPosition>
-          <FontInfo>
-            <FontName>Arial</FontName>
-            <FontSize>12</FontSize>
-            <IsBold>False</IsBold>
-            <IsItalic>False</IsItalic>
-            <IsUnderline>False</IsUnderline>
-            <FontBrush>
+          <Size>Large</Size>
+          <EQRCodeType>QRCodeWebPage</EQRCodeType>
+          <WebAddressDataHolder>
+            <DataString></DataString>
+          </WebAddressDataHolder>
+          <ObjectLayout>
+            <DYMOPoint>
+              <X>2.220423</X>
+              <Y>0.3111874</Y>
+            </DYMOPoint>
+            <Size>
+              <Width>1.219588</Width>
+              <Height>0.4983333</Height>
+            </Size>
+          </ObjectLayout>
+        </QRCodeObject>
+        <TextObject>
+          <Name>ITextObject2</Name>
+          <Brushes>
+            <BackgroundBrush>
+              <SolidColorBrush>
+                <Color A="0" R="0" G="0" B="0"></Color>
+              </SolidColorBrush>
+            </BackgroundBrush>
+            <BorderBrush>
               <SolidColorBrush>
                 <Color A="1" R="0" G="0" B="0"></Color>
               </SolidColorBrush>
-            </FontBrush>
-          </FontInfo>
+            </BorderBrush>
+            <StrokeBrush>
+              <SolidColorBrush>
+                <Color A="1" R="0" G="0" B="0"></Color>
+              </SolidColorBrush>
+            </StrokeBrush>
+            <FillBrush>
+              <SolidColorBrush>
+                <Color A="0" R="0" G="0" B="0"></Color>
+              </SolidColorBrush>
+            </FillBrush>
+          </Brushes>
+          <Rotation>Rotation0</Rotation>
+          <OutlineThickness>1</OutlineThickness>
+          <IsOutlined>False</IsOutlined>
+          <BorderStyle>SolidLine</BorderStyle>
+          <Margin>
+            <DYMOThickness Left="0" Top="0" Right="0" Bottom="0" />
+          </Margin>
+          <HorizontalAlignment>Center</HorizontalAlignment>
+          <VerticalAlignment>Middle</VerticalAlignment>
+          <FitMode>AlwaysFit</FitMode>
+          <IsVertical>False</IsVertical>
+          <FormattedText>
+            <FitMode>AlwaysFit</FitMode>
+            <HorizontalAlignment>Center</HorizontalAlignment>
+            <VerticalAlignment>Middle</VerticalAlignment>
+            <IsVertical>False</IsVertical>
+            <LineTextSpan>
+              <TextSpan>
+                <Text>COLOR_NAME</Text>
+                <FontInfo>
+                  <FontName>Segoe UI</FontName>
+                  <FontSize>13.8</FontSize>
+                  <IsBold>False</IsBold>
+                  <IsItalic>False</IsItalic>
+                  <IsUnderline>False</IsUnderline>
+                  <FontBrush>
+                    <SolidColorBrush>
+                      <Color A="1" R="0" G="0" B="0"></Color>
+                    </SolidColorBrush>
+                  </FontBrush>
+                </FontInfo>
+              </TextSpan>
+            </LineTextSpan>
+          </FormattedText>
           <ObjectLayout>
             <DYMOPoint>
-              <X>2.10241</X>
-              <Y>0.1777108</Y>
+              <X>1.75168</X>
+              <Y>0.0620208</Y>
             </DYMOPoint>
             <Size>
-              <Width>1.230002</Width>
-              <Height>0.7030387</Height>
+              <Width>1.688333</Width>
+              <Height>0.2587503</Height>
             </Size>
           </ObjectLayout>
-        </BarcodeObject>
+        </TextObject>
       </LabelObjects>
     </DynamicLayoutManager>
   </DYMOLabel>
