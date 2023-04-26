@@ -4,15 +4,71 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QR Code Label Creator</title>
-    <script src="//www.labelwriter.com/software/dls/sdk/js/DYMO.Label.Framework.latest.js"></script>
+    <script
+      src="https://s3.amazonaws.com/download.dymo.com/dymo/Software/JavaScript/dymo.connect.framework.js"
+      type="text/javascript"
+      charset="UTF-8"
+    ></script>
     <script src="/app.js"></script>
   </head>
   <body>
-    <form id="job-form">
-      <label for="job-name">Job Name:</label>
-      <input type="text" id="job-name" name="job-name" required />
-      <button type="submit">Create Job and Print Label</button>
+    <form
+      id="job-form"
+      method="post"
+      action="/create-job"
+      enctype="multipart/form-data"
+    >
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" /><br />
+
+      <label for="customer">Customer:</label>
+      <input type="text" id="customer" name="customer" /><br />
+
+      <label for="job">Job:</label>
+      <input type="text" id="job" name="job" /><br />
+
+      <label for="colorName">Color Name:</label>
+      <input type="text" id="colorName" name="colorName" /><br />
+
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" /><br />
+
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" /><br />
+
+      <label for="finish">Finish:</label>
+      <select id="finish" name="finish">
+        <option value="Finish 1">Finish 1</option>
+        <option value="Finish 2">Finish 2</option>
+        <option value="Finish 3">Finish 3</option>
+        <option value="Finish 4">Finish 4</option>
+        <option value="Finish 5">Finish 5</option>
+        <option value="Finish 6">Finish 6</option>
+        <option value="Finish 7">Finish 7</option>
+        <option value="Finish 8">Finish 8</option>
+        <option value="Finish 9">Finish 9</option>
+        <option value="Finish 10">Finish 10</option>
+      </select>
+      <br />
+
+      <label for="formula">Formula:</label>
+      <select id="formula" name="formula" multiple>
+        <option value="Formula 1">Formula 1</option>
+        <option value="Formula 2">Formula 2</option>
+        <option value="Formula 3">Formula 3</option>
+        <option value="Formula 4">Formula 4</option>
+        <option value="Formula 5">Formula 5</option>
+        <option value="Formula 6">Formula 6</option>
+        <option value="Formula 7">Formula 7</option>
+        <option value="Formula 8">Formula 8</option>
+        <option value="Formula 9">Formula 9</option>
+        <option value="Formula 10">Formula 10</option>
+      </select>
+      <br />
+
+      <button type="submit">Add Job</button>
     </form>
+
     <img id="qr-code" src="" alt="QR Code" style="display: none" />
   </body>
 </html>

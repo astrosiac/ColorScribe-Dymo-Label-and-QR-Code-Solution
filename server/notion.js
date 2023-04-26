@@ -12,11 +12,64 @@ async function addJobToNotion(jobData) {
 
   const newPage = {
     Name: {
-      title: [
+      rich_text: [
         {
           text: {
             content: jobData.name,
           },
+        },
+      ],
+    },
+    Customer: {
+      title: [
+        {
+          text: {
+            content: jobData.customer,
+          },
+        },
+      ],
+    },
+    Job: {
+      rich_text: [
+        {
+          text: {
+            content: jobData.job,
+          },
+        },
+      ],
+    },
+    ColorName: {
+      rich_text: [
+        {
+          text: {
+            content: jobData.colorName,
+          },
+        },
+      ],
+    },
+    Address: {
+      rich_text: [
+        {
+          text: {
+            content: jobData.address,
+          },
+        },
+      ],
+    },
+    Date: {
+      date: {
+        start: jobData.date,
+      },
+    },
+    Finish: {
+      select: {
+        name: jobData.finish,
+      },
+    },
+    Formula: {
+      multi_select: [
+        {
+          name: jobData.formula,
         },
       ],
     },
@@ -27,7 +80,27 @@ async function addJobToNotion(jobData) {
     properties: newPage,
   });
 
-  return response;
+  // Get the URL of the newly created page
+  const pageUrl = response.url;
+  return { response, pageUrl };
 }
 
-export { addJobToNotion };
+async function updatePageWithQrCode(pageId, qrCodeUrl) {
+  await notion.pages.update({
+    page_id: pageId,
+    properties: {
+      QrCode: {
+        files: [
+          {
+            name: "QR Code",
+            external: {
+              url: qrCodeUrl,
+            },
+          },
+        ],
+      },
+    },
+  });
+}
+
+export { addJobToNotion, updatePageWithQrCode };
