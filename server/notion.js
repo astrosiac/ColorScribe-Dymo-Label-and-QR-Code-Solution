@@ -11,15 +11,6 @@ async function addJobToNotion(jobData) {
   console.log("Adding job to Notion: ", jobData);
 
   const newPage = {
-    Name: {
-      rich_text: [
-        {
-          text: {
-            content: jobData.name,
-          },
-        },
-      ],
-    },
     Customer: {
       title: [
         {

@@ -15,6 +15,21 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await response.json();
       const qrCodeUrl = data.qrCodeUrl;
 
+      // Send the jobId and qrCodeUrl to the server to generate a new label file
+      const responseLabel = await fetch("/generate-label", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Company: formData.get("customer"), // Get the customer name from the form data
+          qrCodeUrl: qrCodeUrl,
+        }),
+      });
+
+      const dataLabel = await responseLabel.json();
+      const newLabelFilePath = dataLabel.newLabelFilePath;
+
       // Display the QR code
       const qrCodeImage = document.getElementById("qr-code");
       qrCodeImage.src = qrCodeUrl;
@@ -31,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
             function (label) {
               const qrCodeObject = label.getObjectByName("QRCodeObject");
               qrCodeObject.setAddress(qrCodeUrl);
-              console.log(qrCodeObject);
+
               // Print the label
               const printers = dymo.label.framework.getPrinters();
               const printer = printers.filter(
