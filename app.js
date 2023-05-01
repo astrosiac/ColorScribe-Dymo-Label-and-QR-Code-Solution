@@ -1,9 +1,7 @@
+import { generateLabel } from "./server/labelLogic.js";
 import express from "express";
 import { addJobToNotion, updatePageWithQrCode } from "./server/notion.js";
 import multer from "multer";
-import fs from "fs";
-import xml2js from "xml2js";
-import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -20,8 +18,16 @@ app.get("/", (req, res) => {
 
 app.post("/create-job", upload.none(), async (req, res) => {
   try {
-    const { customer, job, colorName, address, date, finish, formula } =
-      req.body;
+    const {
+      customer,
+      job,
+      colorName,
+      address,
+      date,
+      finish,
+      texture,
+      formula,
+    } = req.body;
 
     const jobData = {
       customer,
@@ -30,13 +36,14 @@ app.post("/create-job", upload.none(), async (req, res) => {
       address,
       date,
       finish,
+      texture,
       formula,
       color: "",
     };
 
     const { response: notionResponse, pageUrl } = await addJobToNotion(jobData);
 
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(
       pageUrl
     )}`;
 
@@ -49,77 +56,21 @@ app.post("/create-job", upload.none(), async (req, res) => {
   }
 });
 
-import axios from "axios";
-
-// ...
-
 app.post("/generate-label", async (req, res) => {
-  const { jobId, qrCodeUrl } = req.body;
+  console.log("Inside generateLabel function");
+  console.log("req.body:", req.body);
+  const colorName = req.body.colorName;
+  const data = encodeURIComponent(req.body.qrCodeUrl);
+  const customerName = req.body.customer.replace(/\s+/g, "-");
+  const jobName = req.body.job.replace(/\s+/g, "-");
+  const newLabelFilePath = `uploads/${customerName}-${jobName}.dymo`;
 
   try {
-    // Fetch the QR code image as an ArrayBuffer
-    const response = await axios.get(qrCodeUrl, {
-      responseType: "arraybuffer",
-    });
+    // Call the generateLabel function
+    await generateLabel(colorName, data, newLabelFilePath);
 
-    // Convert the QR code image to a Base64 string
-    const base64QrCode = Buffer.from(response.data, "binary").toString(
-      "base64"
-    );
-
-    const labelTemplatePath =
-      "C:/Users/savvy/Projects/ziaMaterials/uploads/dymo-test-file-3.dymo";
-    const newLabelFilePath = `C:/Users/savvy/Projects/ziaMaterials/uploads/${req.body.Customer}.dymo`;
-
-    // Read the label template file
-    fs.readFile(labelTemplatePath, "utf8", async (err, data) => {
-      if (err) {
-        console.error("Error reading the label template:", err);
-        res.status(500).send({ error: "Error reading the label template" });
-        return;
-      }
-
-      // Parse the XML content
-      const parser = new xml2js.Parser();
-      const builder = new xml2js.Builder();
-      const parsedXml = await parser.parseStringPromise(data);
-
-      function findQRCodeObject(obj) {
-        if (obj.QRCodeObject) {
-          return obj;
-        }
-
-        for (const key in obj) {
-          if (typeof obj[key] === "object") {
-            const result = findQRCodeObject(obj[key]);
-            if (result) {
-              return result;
-            }
-          }
-        }
-
-        return null;
-      }
-
-      // Update the QR code Base64 image in the parsed XML
-      const qrCodeObject = findQRCodeObject(parsedXml);
-      qrCodeObject.ImageDataHolder[0].Base64Image[0] = base64QrCode;
-
-      // Build the updated XML content
-      const updatedXml = builder.buildObject(parsedXml);
-
-      // Save the updated .label file with a unique name
-      fs.writeFile(newLabelFilePath, updatedXml, "utf8", (err) => {
-        if (err) {
-          console.error("Error saving the new label file:", err);
-          res.status(500).send({ error: "Error saving the new label file" });
-          return;
-        }
-
-        // Send the new label file path to the client
-        res.status(200).send({ newLabelFilePath: newLabelFilePath });
-      });
-    });
+    // Send the new label file path to the client
+    res.status(200).send({ newLabelFilePath: newLabelFilePath });
   } catch (error) {
     console.error("Error generating the new label file:", error);
     res.status(500).send({ error: "Error generating the new label file" });

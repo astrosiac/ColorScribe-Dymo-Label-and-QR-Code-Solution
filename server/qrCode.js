@@ -1,8 +1,13 @@
 import QRCode from "qrcode";
 
-async function generateQrCodeUrl(jobData) {
+async function generateQrCodeUrl(
+  jobData,
+  scale = 1,
+  errorCorrectionLevel = "L"
+) {
   const qrCodeUrl = await QRCode.toDataURL(JSON.stringify(jobData), {
-    errorCorrectionLevel: "H",
+    errorCorrectionLevel: errorCorrectionLevel,
+    scale: scale,
   });
 
   return qrCodeUrl;
