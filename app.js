@@ -3,6 +3,7 @@ import { addJobToNotion, updatePageWithQrCode } from "./server/notion.js";
 import multer from "multer";
 import fs from "fs";
 import xml2js from "xml2js";
+import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -19,8 +20,16 @@ app.get("/", (req, res) => {
 
 app.post("/create-job", upload.none(), async (req, res) => {
   try {
-    const { customer, job, colorName, address, date, finish, formula } =
-      req.body;
+    const {
+      customer,
+      job,
+      colorName,
+      address,
+      date,
+      finish,
+      texture,
+      formula,
+    } = req.body;
 
     const jobData = {
       customer,
@@ -29,13 +38,14 @@ app.post("/create-job", upload.none(), async (req, res) => {
       address,
       date,
       finish,
+      texture,
       formula,
       color: "",
     };
 
     const { response: notionResponse, pageUrl } = await addJobToNotion(jobData);
 
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(
       pageUrl
     )}`;
 
@@ -52,9 +62,11 @@ app.post("/generate-label", async (req, res) => {
   const { jobId, qrCodeUrl } = req.body;
 
   try {
-    const labelTemplatePath =
-      "C:/Users/savvy/Projects/ziaMaterials/uploads/dymo-test-file-3.dymo";
-    const newLabelFilePath = `C:/Users/savvy/Projects/ziaMaterials/uploads/${req.body.Customer}.dymo`;
+    const labelTemplatePath = "uploads/template.xml";
+
+    const customerName = req.body.customer.replace(/\s+/g, "-");
+    const jobName = req.body.job.replace(/\s+/g, "-");
+    const newLabelFilePath = `uploads/${customerName}-${jobName}.dymo`;
 
     // Read the label template file
     fs.readFile(labelTemplatePath, "utf8", async (err, data) => {
@@ -88,8 +100,16 @@ app.post("/generate-label", async (req, res) => {
 
       // Update the QR code URL in the parsed XML
       const qrCodeObject = findQRCodeObject(parsedXml);
-
-      qrCodeObject.Text = [qrCodeUrl];
+      console.log(qrCodeObject);
+      if (!qrCodeObject || !qrCodeObject.Data) {
+        console.error(
+          "Error: QR code object or data not found in label template."
+        );
+        res.status(500).send({ error: "Error creating label" });
+        return;
+      }
+      qrCodeObject.Data[0].DataString[0] = qrCodeUrl;
+      qrCodeObject.WebAddressDataHolder[0].DataString[0] = qrCodeUrl;
 
       // Build the updated XML content
       const updatedXml = builder.buildObject(parsedXml);

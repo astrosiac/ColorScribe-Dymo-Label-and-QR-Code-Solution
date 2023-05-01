@@ -22,7 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Company: formData.get("customer"), // Get the customer name from the form data
+          customer: formData.get("customer"), // Get the customer name from the form data
+          job: formData.get("job"), // Get the job name from the form data
           qrCodeUrl: qrCodeUrl,
         }),
       });
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
       script.onload = function () {
         dymo.label.framework.init(function () {
           dymo.label.framework.openLabelFile(
-            "C:/Users/savvy/Projects/ziaMaterials/uploads/dymo-test-file-3.label",
+            "../uploads/template.xml",
             function (label) {
               const qrCodeObject = label.getObjectByName("QRCodeObject");
               qrCodeObject.setAddress(qrCodeUrl);

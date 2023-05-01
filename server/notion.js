@@ -57,12 +57,10 @@ async function addJobToNotion(jobData) {
         name: jobData.finish,
       },
     },
-    Formula: {
-      multi_select: [
-        {
-          name: jobData.formula,
-        },
-      ],
+    Texture: {
+      select: {
+        name: jobData.texture,
+      },
     },
   };
 
