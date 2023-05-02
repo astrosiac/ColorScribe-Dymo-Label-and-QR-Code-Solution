@@ -13,7 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       const data = await response.json();
+      console.log("Response data from /create-job:", data.colorName);
       const qrCodeUrl = data.qrCodeUrl;
+      const customer = data.customer;
+      const job = data.job;
+      const colorName = data.colorName;
 
       // Send the jobId and qrCodeUrl to the server to generate a new label file
       const responseLabel = await fetch("/generate-label", {
@@ -22,8 +26,10 @@ document.addEventListener("DOMContentLoaded", function () {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Company: formData.get("customer"), // Get the customer name from the form data
+          customer: customer,
+          job: job,
           qrCodeUrl: qrCodeUrl,
+          colorName: colorName,
         }),
       });
 
@@ -42,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
       script.onload = function () {
         dymo.label.framework.init(function () {
           dymo.label.framework.openLabelFile(
-            "C:/Users/savvy/Projects/ziaMaterials/uploads/dymo-test-file-3.label",
+            newLabelFilePath,
             function (label) {
               const qrCodeObject = label.getObjectByName("QRCodeObject");
               qrCodeObject.setAddress(qrCodeUrl);
