@@ -43,13 +43,13 @@ app.post("/create-job", upload.none(), async (req, res) => {
 
     const { response: notionResponse, pageUrl } = await addJobToNotion(jobData);
 
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(
-      pageUrl
-    )}`;
+    // const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(
+    //   pageUrl
+    // )}`;
 
-    await updatePageWithQrCode(notionResponse.id, qrCodeUrl);
+    await updatePageWithQrCode(notionResponse.id, pageUrl);
 
-    res.json({ qrCodeUrl: qrCodeUrl });
+    res.json({ qrCodeUrl: pageUrl, colorName, customer, job });
   } catch (error) {
     console.error("Error in /create-job:", error.message);
     res.status(500).json({ error: "Internal server error" });
@@ -57,10 +57,12 @@ app.post("/create-job", upload.none(), async (req, res) => {
 });
 
 app.post("/generate-label", async (req, res) => {
+  const { colorName, qrCodeUrl } = req.body;
   console.log("Inside generateLabel function");
-  console.log("req.body:", req.body);
-  const colorName = req.body.colorName;
-  const data = encodeURIComponent(req.body.qrCodeUrl);
+  console.log("req.body:", colorName);
+
+  // const data = encodeURIComponent(req.body.qrCodeUrl);
+  const data = req.body.qrCodeUrl;
   const customerName = req.body.customer.replace(/\s+/g, "-");
   const jobName = req.body.job.replace(/\s+/g, "-");
   const newLabelFilePath = `uploads/${customerName}-${jobName}.dymo`;

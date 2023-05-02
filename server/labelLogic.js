@@ -5,11 +5,23 @@ import fs from "fs";
 function customSerializeToString(doc) {
   const serializer = new XMLSerializer();
   const originalStr = serializer.serializeToString(doc);
-  const modifiedStr = originalStr.replace(/<(\w+)([^>]*)\/>/g, "<$1$2></$1>");
+  const modifiedStr = originalStr.replace(
+    /<(\w+)([^>]*)\/>/g,
+    (match, tag, attrs) => {
+      if (tag === "DYMOThickness") {
+        return match;
+      }
+      return `<${tag}${attrs}></${tag}>`;
+    }
+  );
   return modifiedStr;
 }
 
 async function generateLabel(colorName, data, newLabelFilePath) {
+  console.log("Inside generateLabel function");
+  console.log("colorName:", colorName);
+  console.log("data:", data);
+  console.log("newLabelFilePath:", newLabelFilePath);
   // Generate QR code
   const qrCodeDataURL = await QRCode.toDataURL(data);
 
@@ -23,12 +35,21 @@ async function generateLabel(colorName, data, newLabelFilePath) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(templateXml, "application/xml");
 
-  // Update the color name and QR code data
+  // Update the color name, QR code data, DataString and WebAddressDataHolder
   const textElement = doc.getElementsByTagName("Text")[0];
-  const dataElement = doc.getElementsByTagName("Data")[1];
+  const qrCodeDataElement = doc.getElementsByTagName("Data")[1];
+  const imageDataStringElement = doc.getElementsByTagName("DataString")[0];
+  const webAddressDataHolderElement = doc.getElementsByTagName("DataString")[1];
 
   textElement.textContent = colorName;
-  dataElement.textContent = qrCodeBase64;
+  qrCodeDataElement.textContent = ""; // Clear the existing content
+  imageDataStringElement.textContent = qrCodeBase64;
+  webAddressDataHolderElement.textContent = data;
+
+  // Create a new DataString element for the QRCodeObject's Data
+  const newDataStringElement = doc.createElement("DataString");
+  newDataStringElement.textContent = qrCodeBase64;
+  qrCodeDataElement.appendChild(newDataStringElement);
 
   // Convert the modified XML object back to a string using the custom function
   const modifiedXml = customSerializeToString(doc);
