@@ -92,6 +92,9 @@ async function addJobToNotion(jobData) {
         start: jobData.date,
       },
     },
+    Color: {
+      url: jobData.color || "",
+    },
     Finish: {
       select: {
         name: jobData.finish,
