@@ -1,6 +1,7 @@
 import { generateLabel } from "./server/labelLogic.js";
 import express from "express";
 import { addJobToNotion, updatePageWithQrCode } from "./server/notion.js";
+import path from "path";
 import multer from "multer";
 import dotenv from "dotenv";
 dotenv.config();
@@ -12,8 +13,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// Route handler for the root path
 app.get("/", (req, res) => {
-  res.sendFile("public/index.html");
+  res.sendFile(path.resolve("public/index.html"));
+});
+
+// Route handler for the CSS file
+app.get("/static/css/main.css", (req, res) => {
+  res.set("Content-Type", "text/css");
+  res.sendFile(path.resolve("static/css/main.css"));
 });
 
 app.post("/create-job", upload.none(), async (req, res) => {
@@ -37,7 +45,7 @@ app.post("/create-job", upload.none(), async (req, res) => {
       date,
       finish,
       texture,
-      formula,
+      formulas: formula,
       color: "",
     };
 
@@ -63,8 +71,10 @@ app.post("/generate-label", async (req, res) => {
 
   // const data = encodeURIComponent(req.body.qrCodeUrl);
   const data = req.body.qrCodeUrl;
-  const customerName = req.body.customer.replace(/\s+/g, "-");
-  const jobName = req.body.job.replace(/\s+/g, "-");
+  const customerName = req.body.customer
+    ? req.body.customer.replace(/\s+/g, "-")
+    : undefined;
+  const jobName = req.body.job ? req.body.job.replace(/\s+/g, "-") : undefined;
   const newLabelFilePath = `uploads/${customerName}-${jobName}.dymo`;
 
   try {

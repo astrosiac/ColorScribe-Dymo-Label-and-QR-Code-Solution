@@ -1,0 +1,74 @@
+
+      .logo-container {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo-container img {
+        max-width: 300px;
+        margin: 10px;
+      }
+      form {
+        margin: 0px 20px;
+        max-width: 320px;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+      }
+      body {
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+      }
+      .main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        
+      }
+      .forminput {
+        margin-bottom: 5px;
+        width: 100%;
+        text-align:left;
+      }
+      .forminputmulti {
+        /* 
+        margin-top: 5px; 
+        vertical-align: top;*/
+    overflow-y: auto;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 5px;
+    display: block ;
+    margin-bottom: 6px;
+      }
+      .full-width-button {
+        width:100%;
+      }
+      .formula-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    align-items: center;
+    align-content: flex-start;
+  }
+  /* .forminputmulti option {
+    padding: 5px;
+  } */
+  .number-container {
+    float:right;
+  }
+  .number-input {
+    width: 50px;
+    margin-left: 10px;
+  }
+  .ml10 {
+    margin-left: 10px;
+  }
+  .formula-checkbox {
+    display: inline-block;
+  }.formula-label {
+    display: inline;
+    margin-right: 10px;
+  }
+    

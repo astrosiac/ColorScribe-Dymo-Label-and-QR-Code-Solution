@@ -1,10 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("job-form");
+  const clearButton = document.getElementById("clear-form-btn");
 
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
+    const checkboxes = document.querySelectorAll(".formula-checkbox");
+    const numberInputs = document.querySelectorAll(".number-input");
     const formData = new FormData(event.target);
+
+    const formulaData = Array.from(checkboxes).reduce(
+      (acc, checkbox, index) => {
+        if (checkbox.checked) {
+          acc.push({
+            name: checkbox.value,
+            value: parseInt(numberInputs[index].value),
+          });
+        }
+        return acc;
+      },
+      []
+    );
+
+    formData.delete("formula[]");
+    formulaData.forEach((formula, index) => {
+      formData.append(`formula[${index}][name]`, formula.name);
+      formData.append(`formula[${index}][value]`, formula.value);
+    });
 
     try {
       const response = await fetch("/create-job", {
@@ -71,8 +93,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       };
       document.body.appendChild(script);
+      form.reset();
     } catch (error) {
       console.error("Error submitting the form:", error);
     }
+  });
+
+  clearButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    form.reset();
   });
 });
