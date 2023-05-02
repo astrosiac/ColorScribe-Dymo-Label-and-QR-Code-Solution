@@ -8,237 +8,364 @@
       src="https://s3.amazonaws.com/download.dymo.com/dymo/Software/JavaScript/dymo.connect.framework.js"
       type="text/javascript"
       charset="UTF-8"
-    ></script> 
+    ></script>
     <script src="/app.js"></script>
-    <style>
-      .logo-container {
-        display:flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .logo-container img {
-        max-width: 300px;
-        margin: 10px;
-      }
-      form {
-        margin: 0px 20px;
-        max-width: 320px;
-        font-family:Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 14px;
-        line-height: 20px;
-      }
-      body {
-        font-family:Verdana, Geneva, Tahoma, sans-serif;
-      }
-      .main {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        
-      }
-      .forminput {
-        margin-bottom: 5px;
-        width: 100%;
-        text-align:left;
-      }
-      .forminputmulti {
-        /* 
-        margin-top: 5px; 
-        vertical-align: top;*/
-    overflow-y: auto;
-    font-size: 16px;
-    padding: 5px;
-    border-radius: 5px;
-    display: block ;
-    margin-bottom: 6px;
-      }
-      .full-width-button {
-        width:100%;
-      }
-      .formula-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-    align-items: center;
-    align-content: flex-start;
-  }
-  /* .forminputmulti option {
-    padding: 5px;
-  } */
-  .number-container {
-    float:right;
-  }
-  .number-input {
-    width: 50px;
-    margin-left: 10px;
-  }
-  .ml10 {
-    margin-left: 10px;
-  }
-  .formula-checkbox {
-    display: inline-block;
-  }.formula-label {
-    display: inline;
-    margin-right: 10px;
-  }
-    </style>
+    <link rel="stylesheet" href="static/css/main.css" />
   </head>
   <body>
     <div class="main">
-    <div class="logo-container">
-      <img src="images/zia-materials-logo.png" alt="Zia Materials Logo" />
-    </div>
-    <div>
-    <form
-      id="job-form"
-      method="post"
-      action="/create-job"
-      enctype="multipart/form-data"
-    >
-      <label for="customer">Customer:</label>
-      <input type="text" id="customer" name="customer" class="forminput"/><br />
-
-      <label for="job">Job:</label>
-      <input type="text" id="job" name="job" class="forminput"/><br />
-
-      <label for="colorName">Color Name:</label>
-      <input type="text" id="colorName" name="colorName" class="forminput"/><br />
-
-      <label for="address">Address:</label>
-      <input type="text" id="address" name="address"class="forminput" /><br />
-
-      <label for="date">Date:</label>
-      <input type="date" id="date" name="date" class="forminput"/><br />
-
-      <label for="finish">Finish:</label>
-      <select id="finish" name="finish" class="forminput">
-        <option value="Xi-Textured Acrylic Finish">Xi-Textured Acrylic Finish</option>
-        <option value="Xi-Flex Finish">Xi-Flex Finish</option>
-        <option value="Facades Hacienda Acrylic Finish">Facades Hacienda Acrylic Finish</option>
-        <option value="Xi-Flex Coating">Xi-Flex Coating</option>
-        <option value="Xi-Alkali Resistant Primer">Xi-Alkali Resistant Primer</option>
-        <option value="ArmourFill ">ArmourFill </option>
-        <option value="Armourtone Fine">Armourtone Fine</option>
-        <option value="Armourtone Sanded">Armourtone Sanded</option>
-        <option value="Armourtone Top Coat">Armourtone Top Coat</option>
-        <option value="Claro HP">Claro HP</option>
-      </select>
-      <br />
-
-      <label for="texture">Texture:</label>
-      <select id="texture" name="texture" class="forminput">
-        <option value="50 Smooth Light Base">.50 Smooth Light Base</option>
-        <option value="50 Smooth  Dark Base">.50 Smooth  Dark Base</option>
-        <option value="75 Ultra Fine Sand Light Base">.75 Ultra Fine Sand Light Base</option>
-        <option value="75 Ultra Fine Sand Dark Base">.75 Ultra Fine Sand Dark Base</option>
-        <option value="1.0 Fine Sand Light Base">1.0 Fine Sand Light Base</option>
-        <option value="1.0 Fine Sand Dark Base">1.0 Fine Sand Dark Base</option>
-        <option value="1.25 Medium Sand Light Base">1.25 Medium Sand Light Base</option>
-        <option value="1.25 Medium Sand Dark Base">1.25 Medium Sand Dark Base</option>
-        <option value="2.0 Coarse Sand Light Base">2.0 Coarse Sand Light Base</option>
-        <option value="2.0 Coarse Sand Dark Base">2.0 Coarse Sand Dark Base</option>
-        <option value="Light Base">Light Base</option>
-        <option value="Dark Base">Dark Base</option>
-        <option value="Tint Base">Tint Base</option>
-        <option value="Deep Base">Deep Base</option>
-      </select>
-      <br />
-
-      <label for="formula"></label>
-      <div class="formula-container" id="formula" >
-        <!-- <select id="formula" name="formula" multiple class="forminputmulti">
-          <option value="Bright Red">Bright Red</option>
-          <option value="Brown Oxide">Brown Oxide</option>
-          <option value="Lamp Black">Lamp Black</option>
-          <option value="Magenta">Magenta</option>
-          <option value="Phthalo Green">Phthalo Green</option>
-          <option value="Raw Umber">Raw Umber</option>
-          <option value="Red Oxide">Red Oxide</option>
-          <option value="TiWhite">TiWhite</option>
-          <option value="V. Yellow">V. Yellow</option>
-          <option value="Yellow Ox">Yellow Ox</option>
-          <option value="BC Blue">BC Blue</option>
-          <option value="Red Interior">Red Interior</option>
-        </select> -->
-         <div>
-          <!-- Savoy, This Formula input is not linked yet to the Notion page. But the QRcode and template generation are working-->
-          <label>Formula:</label><br>
-          <input type="checkbox" id="bright-red-checkbox" name="formula[]" value="Bright Red" class="forminputmulti formula-checkbox">
-          <label for="bright-red-checkbox" class="formula-label">Bright Red</label><br>
-          <input type="checkbox" id="brown-oxide-checkbox" name="formula[]" value="Brown Oxide" class="forminputmulti formula-checkbox">
-          <label for="brown-oxide-checkbox" class="formula-label">Brown Oxide</label><br>
-          <input type="checkbox" id="lamp-black-checkbox" name="formula[]" value="Lamp Black" class="forminputmulti formula-checkbox">
-          <label for="lamp-black-checkbox" class="formula-label">Lamp Black</label><br>
-          <input type="checkbox" id="magenta-checkbox" name="formula[]" value="Magenta" class="forminputmulti formula-checkbox">
-          <label for="magenta-checkbox" class="formula-label">Magenta</label><br>
-          <input type="checkbox" id="phthalo-green-checkbox" name="formula[]" value="Phthalo Green" class="forminputmulti formula-checkbox">
-          <label for="phthalo-green-checkbox" class="formula-label">Phthalo Green</label><br>
-          <input type="checkbox" id="raw-umber-checkbox" name="formula[]" value="Raw Umber" class="forminputmulti formula-checkbox">
-          <label for="raw-umber-checkbox" class="formula-label">Raw Umber</label><br>
-          <input type="checkbox" id="red-oxide-checkbox" name="formula[]" value="Red Oxide" class="forminputmulti formula-checkbox">
-          <label for="red-oxide-checkbox" class="formula-label">Red Oxide</label><br>
-          <input type="checkbox" id="tiwhite-checkbox" name="formula[]" value="TiWhite" class="forminputmulti formula-checkbox">
-          <label for="tiwhite-checkbox" class="formula-label">TiWhite</label><br>
-          <input type="checkbox" id="v-yellow-checkbox" name="formula[]" value="V. Yellow" class="forminputmulti formula-checkbox">
-          <label for="v-yellow-checkbox" class="formula-label">V. Yellow</label><br>
-          <input type="checkbox" id="yellow-ox-checkbox" name="formula[]" value="Yellow Ox" class="forminputmulti formula-checkbox">
-          <label for="yellow-ox-checkbox" class="formula-label">Yellow Ox</label><br>
-          <input type="checkbox" id="bc-blue-checkbox" name="formula[]" value="BC Blue" class="forminputmulti formula-checkbox">
-          <label for="bc-blue-checkbox" class="formula-label">BC Blue</label><br>
-          <input type="checkbox" id="red-interior-checkbox" name="formula[]" value="Red Interior" class="forminputmulti formula-checkbox">
-          <label for="red-interior-checkbox" class="formula-label">Red Interior</label><br>
-        </div>
-        <div class="number-container"><label class="ml10">Value</label><br>
-          <label for="bright-red-input"></label>
-          <input type="number" id="bright-red-input" class="number-input" min="0" max="100" name="Bright Red[]" disabled>
-          <br><label for="brown-oxide-input"></label>
-          <input type="number" id="brown-oxide-input" class="number-input" min="0" max="100" name="Brown Oxide[]" disabled>
-          <br><label for="lamp-black-input"></label>
-          <input type="number" id="lamp-black-input" class="number-input" min="0" max="100" name="Lamp Black[]" disabled>
-          <br><label for="magenta-input"></label>
-          <input type="number" id="magenta-input" class="number-input" min="0" max="100" name="Magenta[]" disabled>
-          <br><label for="phthalo-green-input"></label>
-          <input type="number" id="phthalo-green-input" class="number-input" min="0" max="100" name="Phthalo Green[]" disabled>
-          <br><label for="raw-umber-input"></label>
-          <input type="number" id="raw-umber-input" class="number-input" min="0" max="100" name="Raw Umber[]" disabled>
-          <br><label for="red-oxide-input"></label>
-          <input type="number" id="red-oxide-input" class="number-input" min="0" max="100" name="Red Oxide[]" disabled>
-          <br><label for="tiwhite-input"></label>
-          <input type="number" id="tiwhite-input" class="number-input" min="0" max="100" name="TiWhite[]" disabled>
-          <br><label for="v-yellow-input"></label>
-          <input type="number" id="v-yellow-input" class="number-input" min="0" max="100" name="V. Yellow[]" disabled>
-          <br><label for="yellow-ox-input"></label>
-          <input type="number" id="yellow-ox-input" class="number-input" min="0" max="100" name="Yellow Ox[]" disabled>
-          <br><label for="bc-blue-input"></label>
-          <input type="number" id="bc-blue-input" class="number-input" min="0" max="100" name="BC Blue[]" disabled >
-          <br><label for="red-interior-input"></label>
-          <input type="number" id="red-interior-input" class="number-input" min="0" max="100" name="Red Interior[]" disabled>
-          <br>
-          
-          
-        </div>
-        <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const checkboxes = document.querySelectorAll('.formula-checkbox');
-            const numberInputs = document.querySelectorAll('.number-input');
-            
-            checkboxes.forEach((checkbox, index) => {
-              checkbox.addEventListener('change', () => {
-                numberInputs[index].disabled = !checkbox.checked;
-              });
-            });
-          });
-        </script> 
+      <div class="logo-container">
+        <img src="images/zia-materials-logo.png" alt="Zia Materials Logo" />
       </div>
-      <br />
-      
-      <button type="submit" class="full-width-button">Add Job</button>
-    </form>
+      <div>
+        <form
+          id="job-form"
+          method="post"
+          action="/create-job"
+          enctype="multipart/form-data"
+        >
+          <label for="customer">Customer:</label>
+          <input
+            type="text"
+            id="customer"
+            name="customer"
+            class="forminput"
+          /><br />
 
-    <img id="qr-code" src="" alt="QR Code" style="display: none; margin: 10px 20px;" />
-  </div></div>
-  
+          <label for="job">Job:</label>
+          <input type="text" id="job" name="job" class="forminput" /><br />
+
+          <label for="colorName">Color Name:</label>
+          <input
+            type="text"
+            id="colorName"
+            name="colorName"
+            class="forminput"
+          /><br />
+
+          <label for="address">Address:</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            class="forminput"
+          /><br />
+          <label for="date">Date:</label>
+          <input type="date" id="date" name="date" class="forminput" /><br />
+          <br />
+          <label for="finish">Finish:</label>
+          <select id="finish" name="finish" class="forminput">
+            <option value="Xi-Textured Acrylic Finish">
+              Xi-Textured Acrylic Finish
+            </option>
+            <option value="Xi-Flex Finish">Xi-Flex Finish</option>
+            <option value="Facades Hacienda Acrylic Finish">
+              Facades Hacienda Acrylic Finish
+            </option>
+            <option value="Xi-Flex Coating">Xi-Flex Coating</option>
+            <option value="Xi-Alkali Resistant Primer">
+              Xi-Alkali Resistant Primer
+            </option>
+            <option value="ArmourFill ">ArmourFill</option>
+            <option value="Armourtone Fine">Armourtone Fine</option>
+            <option value="Armourtone Sanded">Armourtone Sanded</option>
+            <option value="Armourtone Top Coat">Armourtone Top Coat</option>
+            <option value="Claro HP">Claro HP</option>
+          </select>
+          <br />
+          <label for="texture">Texture:</label>
+          <select id="texture" name="texture" class="forminput">
+            <option value="50 Smooth Light Base">.50 Smooth Light Base</option>
+            <option value="50 Smooth  Dark Base">.50 Smooth Dark Base</option>
+            <option value="75 Ultra Fine Sand Light Base">
+              .75 Ultra Fine Sand Light Base
+            </option>
+            <option value="75 Ultra Fine Sand Dark Base">
+              .75 Ultra Fine Sand Dark Base
+            </option>
+            <option value="1.0 Fine Sand Light Base">
+              1.0 Fine Sand Light Base
+            </option>
+            <option value="1.0 Fine Sand Dark Base">
+              1.0 Fine Sand Dark Base
+            </option>
+            <option value="1.25 Medium Sand Light Base">
+              1.25 Medium Sand Light Base
+            </option>
+            <option value="1.25 Medium Sand Dark Base">
+              1.25 Medium Sand Dark Base
+            </option>
+            <option value="2.0 Coarse Sand Light Base">
+              2.0 Coarse Sand Light Base
+            </option>
+            <option value="2.0 Coarse Sand Dark Base">
+              2.0 Coarse Sand Dark Base
+            </option>
+            <option value="Light Base">Light Base</option>
+            <option value="Dark Base">Dark Base</option>
+            <option value="Tint Base">Tint Base</option>
+            <option value="Deep Base">Deep Base</option>
+          </select>
+          <br />
+
+          <label for="formula"></label>
+          <div class="formula-container" id="formula">
+            <div>
+              <label>Formula:</label><br />
+              <input
+                type="checkbox"
+                id="bright-red-checkbox"
+                name="formula[]"
+                value="Bright Red"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="bright-red-checkbox" class="formula-label"
+                >Bright Red</label
+              ><br />
+              <input
+                type="checkbox"
+                id="brown-oxide-checkbox"
+                name="formula[]"
+                value="Brown Oxide"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="brown-oxide-checkbox" class="formula-label"
+                >Brown Oxide</label
+              ><br />
+              <input
+                type="checkbox"
+                id="lamp-black-checkbox"
+                name="formula[]"
+                value="Lamp Black"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="lamp-black-checkbox" class="formula-label"
+                >Lamp Black</label
+              ><br />
+              <input
+                type="checkbox"
+                id="magenta-checkbox"
+                name="formula[]"
+                value="Magenta"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="magenta-checkbox" class="formula-label">Magenta</label
+              ><br />
+              <input
+                type="checkbox"
+                id="phthalo-green-checkbox"
+                name="formula[]"
+                value="Phthalo Green"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="phthalo-green-checkbox" class="formula-label"
+                >Phthalo Green</label
+              ><br />
+              <input
+                type="checkbox"
+                id="raw-umber-checkbox"
+                name="formula[]"
+                value="Raw Umber"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="raw-umber-checkbox" class="formula-label"
+                >Raw Umber</label
+              ><br />
+              <input
+                type="checkbox"
+                id="red-oxide-checkbox"
+                name="formula[]"
+                value="Red Oxide"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="red-oxide-checkbox" class="formula-label"
+                >Red Oxide</label
+              ><br />
+              <input
+                type="checkbox"
+                id="tiwhite-checkbox"
+                name="formula[]"
+                value="TiWhite"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="tiwhite-checkbox" class="formula-label">TiWhite</label
+              ><br />
+              <input
+                type="checkbox"
+                id="v-yellow-checkbox"
+                name="formula[]"
+                value="V. Yellow"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="v-yellow-checkbox" class="formula-label"
+                >V. Yellow</label
+              ><br />
+              <input
+                type="checkbox"
+                id="yellow-ox-checkbox"
+                name="formula[]"
+                value="Yellow Ox"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="yellow-ox-checkbox" class="formula-label"
+                >Yellow Ox</label
+              ><br />
+              <input
+                type="checkbox"
+                id="bc-blue-checkbox"
+                name="formula[]"
+                value="BC Blue"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="bc-blue-checkbox" class="formula-label">BC Blue</label
+              ><br />
+              <input
+                type="checkbox"
+                id="red-interior-checkbox"
+                name="formula[]"
+                value="Red Interior"
+                class="forminputmulti formula-checkbox"
+              />
+              <label for="red-interior-checkbox" class="formula-label"
+                >Red Interior</label
+              ><br />
+            </div>
+            <div class="number-container">
+              <label class="ml10">Value</label><br />
+              <label for="bright-red-input"></label>
+              <input
+                type="number"
+                id="bright-red-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="Bright Red[]"
+              />
+              <br /><label for="brown-oxide-input"></label>
+              <input
+                type="number"
+                id="brown-oxide-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="Brown Oxide[]"
+              />
+              <br /><label for="lamp-black-input"></label>
+              <input
+                type="number"
+                id="lamp-black-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="Lamp Black[]"
+              />
+              <br /><label for="magenta-input"></label>
+              <input
+                type="number"
+                id="magenta-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="Magenta[]"
+              />
+              <br /><label for="phthalo-green-input"></label>
+              <input
+                type="number"
+                id="phthalo-green-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="Phthalo Green[]"
+              />
+              <br /><label for="raw-umber-input"></label>
+              <input
+                type="number"
+                id="raw-umber-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="Raw Umber[]"
+              />
+              <br /><label for="red-oxide-input"></label>
+              <input
+                type="number"
+                id="red-oxide-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="Red Oxide[]"
+              />
+              <br /><label for="tiwhite-input"></label>
+              <input
+                type="number"
+                id="tiwhite-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="TiWhite[]"
+              />
+              <br /><label for="v-yellow-input"></label>
+              <input
+                type="number"
+                id="v-yellow-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="V. Yellow[]"
+              />
+              <br /><label for="yellow-ox-input"></label>
+              <input
+                type="number"
+                id="yellow-ox-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="Yellow Ox[]"
+              />
+              <br /><label for="bc-blue-input"></label>
+              <input
+                type="number"
+                id="bc-blue-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="BC Blue[]"
+              />
+              <br /><label for="red-interior-input"></label>
+              <input
+                type="number"
+                id="red-interior-input"
+                class="number-input"
+                min="0"
+                max="100"
+                name="Red Interior[]"
+              />
+              <br />
+            </div>
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                const checkboxes =
+                  document.querySelectorAll(".formula-checkbox");
+                const numberInputs = document.querySelectorAll(".number-input");
+
+                checkboxes.forEach((checkbox, index) => {
+                  checkbox.addEventListener("change", () => {
+                    numberInputs[index].disabled = !checkbox.checked;
+                  });
+                });
+              });
+            </script>
+          </div>
+          <br />
+
+          <button id="add-job" type="submit" class="full-width-button">
+            Add Job
+          </button>
+          <button id="clear-form-btn" type="button" class="full-width-button">
+            Clear Form
+          </button>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

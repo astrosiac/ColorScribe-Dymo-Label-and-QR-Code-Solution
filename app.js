@@ -1,22 +1,39 @@
 import { generateLabel } from "./server/labelLogic.js";
 import express from "express";
 import { addJobToNotion, updatePageWithQrCode } from "./server/notion.js";
+import path from "path";
 import multer from "multer";
 import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const upload = multer();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// Route handler for the root path
 app.get("/", (req, res) => {
-  res.sendFile("public/index.html");
+  res.sendFile(path.resolve("public/index.html"));
 });
 
-app.post("/create-job", upload.none(), async (req, res) => {
+// Route handler for the CSS file
+app.get("/static/css/main.css", (req, res) => {
+  res.set("Content-Type", "text/css");
+  res.sendFile(path.resolve("static/css/main.css"));
+});
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
+
+app.post("/create-job", upload.single("colorImage"), async (req, res) => {
   try {
     const {
       customer,
@@ -29,6 +46,8 @@ app.post("/create-job", upload.none(), async (req, res) => {
       formula,
     } = req.body;
 
+    const colorImageUrl = req.file ? "/uploads/" + req.file.filename : "";
+
     const jobData = {
       customer,
       job,
@@ -37,8 +56,8 @@ app.post("/create-job", upload.none(), async (req, res) => {
       date,
       finish,
       texture,
-      formula,
-      color: "",
+      formulas: formula,
+      color: colorImageUrl || "",
     };
 
     const { response: notionResponse, pageUrl } = await addJobToNotion(jobData);
@@ -63,8 +82,10 @@ app.post("/generate-label", async (req, res) => {
 
   // const data = encodeURIComponent(req.body.qrCodeUrl);
   const data = req.body.qrCodeUrl;
-  const customerName = req.body.customer.replace(/\s+/g, "-");
-  const jobName = req.body.job.replace(/\s+/g, "-");
+  const customerName = req.body.customer
+    ? req.body.customer.replace(/\s+/g, "-")
+    : undefined;
+  const jobName = req.body.job ? req.body.job.replace(/\s+/g, "-") : undefined;
   const newLabelFilePath = `uploads/${customerName}-${jobName}.dymo`;
 
   try {
