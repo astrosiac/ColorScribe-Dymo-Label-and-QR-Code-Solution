@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+const upload = multer();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,17 +24,7 @@ app.get("/static/css/main.css", (req, res) => {
   res.sendFile(path.resolve("static/css/main.css"));
 });
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
-
-app.post("/create-job", upload.single("colorImage"), async (req, res) => {
+app.post("/create-job", upload.none(), async (req, res) => {
   try {
     const {
       customer,
@@ -46,8 +37,6 @@ app.post("/create-job", upload.single("colorImage"), async (req, res) => {
       formula,
     } = req.body;
 
-    const colorImageUrl = req.file ? "/uploads/" + req.file.filename : "";
-
     const jobData = {
       customer,
       job,
@@ -57,7 +46,7 @@ app.post("/create-job", upload.single("colorImage"), async (req, res) => {
       finish,
       texture,
       formulas: formula,
-      color: colorImageUrl || "",
+      color: "",
     };
 
     const { response: notionResponse, pageUrl } = await addJobToNotion(jobData);

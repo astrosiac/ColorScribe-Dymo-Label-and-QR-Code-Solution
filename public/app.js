@@ -2,22 +2,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("job-form");
   const clearButton = document.getElementById("clear-form-btn");
 
-  const colorImageBtn = document.getElementById("colorImageBtn");
-  const colorImageInput = document.getElementById("colorImageInput");
-
-  colorImageBtn.addEventListener("click", function () {
-    colorImageInput.click();
-  });
-
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const colorImageFile = document.getElementById("colorImageInput").files[0];
     const checkboxes = document.querySelectorAll(".formula-checkbox");
     const numberInputs = document.querySelectorAll(".number-input");
     const formData = new FormData(event.target);
-
-    formData.append("colorImage", colorImageFile);
 
     const formulaData = Array.from(checkboxes).reduce(
       (acc, checkbox, index) => {
