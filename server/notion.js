@@ -40,9 +40,12 @@ function getNotionPropertyName(formulaName) {
 }
 
 function convertFormulasToMultiSelect(formulas) {
-  return formulas.map((formula) => {
-    return { name: formula.name };
-  });
+  return formulas
+    .map((formula) => {
+      const name = getNotionPropertyName(formula.name);
+      return name ? { name } : null;
+    })
+    .filter((formula) => formula !== null);
 }
 
 async function addJobToNotion(jobData) {
@@ -91,9 +94,6 @@ async function addJobToNotion(jobData) {
       date: {
         start: jobData.date,
       },
-    },
-    Color: {
-      url: jobData.color || "",
     },
     Finish: {
       select: {
