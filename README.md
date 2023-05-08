@@ -15,22 +15,13 @@ This project is a web application for creating custom color mixtures for paint j
 
 git clone https://github.com/astrosiac/DymoQRcodePrinter
 
-css
-
-
 2. Navigate to the project folder:
 
 cd yourrepo
 
-markdown
-
-
 3. Install the required dependencies:
 
 npm install
-
-javascript
-
 
 4. Create a `.env` file in the root directory of the project with the following environment variables:
 
@@ -38,17 +29,11 @@ NOTION_API_KEY=your_notion_api_key
 NOTION_DATABASE_ID=your_notion_database_id
 PORT=3000
 
-javascript
-
-
 Replace `your_notion_api_key` and `your_notion_database_id` with your actual Notion API key and database ID, respectively.
 
 5. Run the development server:
 
 npm start
-
-markdown
-
 
 6. Open your browser and navigate to `http://localhost:3000` to view the application.
 
