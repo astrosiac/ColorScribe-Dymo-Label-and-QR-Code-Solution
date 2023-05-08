@@ -1,4 +1,4 @@
-# Zia Materials Project
+# Dymo QR Code and Label Generator
 
 This project is a web application for creating custom color mixtures for paint jobs. Users can input job details, upload a color image, and select formulas with their respective quantities. The application generates a QR code for the job, creates a label with the QR code, and adds the job to a Notion database.
 
